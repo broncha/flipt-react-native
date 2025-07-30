@@ -1,12 +1,32 @@
+import { useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from 'react-native-flipt';
-
-const result = multiply(3, 7);
+import { FliptClient } from 'react-native-flipt';
 
 export default function App() {
+  useEffect(() => {
+    const client = new FliptClient({
+      url: 'https://fliph.tunn.vantagebit.com',
+      clientToken: 'undefined',
+      environment: 'default',
+      namespace: 'default',
+      reference: 'undefined',
+      updateInterval: BigInt(240),
+    });
+
+    try {
+      const variant = client.evaluateVariant({
+        flagKey: 'VARIANT_TEST',
+        entityId: 'asdasdas',
+        context: new Map(),
+      });
+      console.log(variant);
+    } catch (e) {
+      console.log('evaluateVariant failed', e.inner?.message);
+    }
+  });
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>asdasdasd</Text>
     </View>
   );
 }

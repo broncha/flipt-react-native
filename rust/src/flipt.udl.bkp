@@ -1,0 +1,10 @@
+namespace flipt {
+  dictionary ClientOptions {
+    string url;
+  };
+
+  interface FliptClient {
+    constructor(ClientOptions opts);
+    void close();
+  };
+};

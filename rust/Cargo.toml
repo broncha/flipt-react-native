@@ -1,0 +1,22 @@
+[package]
+name = "flipt-react-native"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+uniffi = { version = "0.29.3", features = [ "cli" ] }
+flipt-engine-ffi = { path = "/Volumes/Workspace/pasls/flipt-client-sdks/flipt-engine-ffi" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uniffi_build = "0.29.4"
+chrono = { version = "0.4", features = ["serde"] }
+
+[dependencies.flipt-evaluation]
+path = "/Volumes/Workspace/pasls/flipt-client-sdks/flipt-evaluation"
+
+[build-dependencies]
+uniffi = { version = "0.29.3", features = [ "build" ] }
+uniffi_build = "0.29.4"
