@@ -209,6 +209,7 @@ export type ClientOptions = {
   updateInterval: /*u64*/ bigint | undefined;
   reference: string | undefined;
   clientToken: string | undefined;
+  fetchMode: string | undefined;
 };
 
 /**
@@ -252,6 +253,7 @@ const FfiConverterTypeClientOptions = (() => {
         updateInterval: FfiConverterOptionalUInt64.read(from),
         reference: FfiConverterOptionalString.read(from),
         clientToken: FfiConverterOptionalString.read(from),
+        fetchMode: FfiConverterOptionalString.read(from),
       };
     }
     write(value: TypeName, into: RustBuffer): void {
@@ -261,6 +263,7 @@ const FfiConverterTypeClientOptions = (() => {
       FfiConverterOptionalUInt64.write(value.updateInterval, into);
       FfiConverterOptionalString.write(value.reference, into);
       FfiConverterOptionalString.write(value.clientToken, into);
+      FfiConverterOptionalString.write(value.fetchMode, into);
     }
     allocationSize(value: TypeName): number {
       return (
@@ -269,7 +272,8 @@ const FfiConverterTypeClientOptions = (() => {
         FfiConverterOptionalString.allocationSize(value.url) +
         FfiConverterOptionalUInt64.allocationSize(value.updateInterval) +
         FfiConverterOptionalString.allocationSize(value.reference) +
-        FfiConverterOptionalString.allocationSize(value.clientToken)
+        FfiConverterOptionalString.allocationSize(value.clientToken) +
+        FfiConverterOptionalString.allocationSize(value.fetchMode)
       );
     }
   }

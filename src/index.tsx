@@ -10,8 +10,11 @@ if (!rustInstalled) {
   rustInstalled = true;
 }
 
-// Export the generated bindings to the app.
-export * from './generated/flipt_react_native';
+// // Export the generated bindings to the app.
+// export * from './generated/flipt_react_native';
+
+// Export our wrapper that matches flipt-client-js API
+export * from './wrapper';
 
 // Now import the bindings so we can:
 // - intialize them
@@ -38,4 +41,3 @@ export async function uniffiInitAsync() {
 export default {
   flipt_react_native,
 };
-

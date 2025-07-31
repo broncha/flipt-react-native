@@ -14,35 +14,22 @@ uniffi::setup_scaffolding!();
 
 #[derive(uniffi::Record, Serialize, Deserialize)]
 pub struct ClientOptions {
-    #[serde(default = "default_environment")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub environment: Option<String>,
-    #[serde(default = "default_namespace")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub namespace: Option<String>,
-    #[serde(default = "default_url")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub url: Option<String>,
-    #[serde(default = "default_update_interval")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub update_interval: Option<u64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub reference: Option<String>,
-    #[serde(rename = "clientToken")]
+    #[serde(default, skip_serializing_if = "Option::is_none", rename = "clientToken")]
     pub client_token: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub fetch_mode: Option<String>,
 }
 
-
-fn default_namespace() -> Option<String> {
-    Some("default".to_string())
-}
-
-fn default_update_interval() -> Option<u64> {
-    Some(120)
-}
-
-fn default_environment() -> Option<String> {
-    Some("default".to_string())
-}
-
-fn default_url() -> Option<String> {
-    Some("http://localhost:8080".to_string())
-}
 
 #[derive(uniffi::Object)]
 pub struct FliptClient {
@@ -78,6 +65,10 @@ impl FliptClient {
 
         if let Some(interval) = opts.update_interval {
             config["update_interval"] = serde_json::Value::Number(serde_json::Number::from(interval));
+        }
+
+        if let Some(fetch_mode) = opts.fetch_mode.filter(|f| !f.is_empty()) {
+            config["fetch_mode"] = serde_json::Value::String(fetch_mode);
         }
 
         // Serialize configuration to JSON
@@ -316,6 +307,7 @@ impl FliptClient {
     }
 
 }
+
 
 #[derive(uniffi::Record, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct EvaluationRequest {

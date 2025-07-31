@@ -6,20 +6,36 @@ export default function App() {
   useEffect(() => {
     const client = new FliptClient({
       url: 'https://fliph.tunn.vantagebit.com',
-      clientToken: 'undefined',
-      environment: 'default',
-      namespace: 'default',
-      reference: 'undefined',
-      updateInterval: BigInt(240),
+      updateInterval: 240,
+      fetchMode: 'streaming',
     });
 
     try {
       const variant = client.evaluateVariant({
         flagKey: 'VARIANT_TEST',
         entityId: 'asdasdas',
-        context: new Map(),
+        context: {},
       });
       console.log(variant);
+
+      const bool1 = client.evaluateBoolean({
+        flagKey: 'ENABLE_CLEAR_COURESE_PROGRESS',
+        entityId: 'asdasd',
+        context: {
+          email: 'broncha@rajesharma.com',
+        },
+      });
+
+      const bool2 = client.evaluateBoolean({
+        flagKey: 'ENABLE_CLEAR_COURESE_PROGRESS',
+        entityId: 'asdfasdfasdfsd',
+        context: {
+          email: 'broncha@hermaid.me',
+        },
+      });
+
+      console.log('broncha@rajesharma.com', bool1);
+      console.log('broncha@hermaid.me', bool2);
     } catch (e) {
       console.log('evaluateVariant failed', e.inner?.message);
     }
