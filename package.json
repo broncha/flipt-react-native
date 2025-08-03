@@ -15,6 +15,7 @@
   "files": [
     "src",
     "lib",
+    "build",
     "android",
     "ios",
     "cpp",

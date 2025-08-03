@@ -2,3 +2,22 @@
 rust:
   directory: rust
   manifestPath: Cargo.toml
+
+android:
+  cargoExtras: []
+  directory: android
+  jniLibs: src/main/jniLibs
+  targets:
+    - arm64-v8a
+    - armeabi-v7a
+
+ios:
+  cargoExtras: []
+  directory: ios
+  native_bindings_dir: swift
+  targets:
+    - aarch64-apple-ios
+    - aarch64-apple-ios-sim
+    # - x86_64-apple-ios
+  xcodebuildExtras: []
+  frameworkName: build/BronchaReactNativeflipt
