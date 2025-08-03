@@ -1,0 +1,4 @@
+[submodule "flipt-client-sdks"]
+	path = flipt-client-sdks
+	url = https://github.com/flipt-io/flipt-client-sdks.git
+	ignore = all
