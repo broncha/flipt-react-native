@@ -87,15 +87,7 @@ export const useStore = (options: ClientOptions): FliptStore => {
               }
             }
           } catch (error) {
-            // Handle errors gracefully - don't break the polling cycle
-            const errorMessage = error.inner?.message || error.message || '';
-            if (
-              errorMessage.includes('error parsing json') ||
-              errorMessage.includes('missing field `result`')
-            ) {
-              // Reset hash to force check on next cycle
-              lastHashRef.current = null;
-            }
+            lastHashRef.current = null;
           }
         }
       }, interval);
