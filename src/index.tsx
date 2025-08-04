@@ -12,6 +12,7 @@ if (!rustInstalled) {
 
 // Export the generated bindings to the app.
 export * from './wrapper';
+export * from './useFliptClient';
 
 // Now import the bindings so we can:
 // - intialize them

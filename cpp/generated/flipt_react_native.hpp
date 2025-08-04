@@ -51,6 +51,10 @@ protected:
   cpp_uniffi_flipt_react_native_fn_method_fliptclient_evaluate_variant(
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
+  jsi::Value
+  cpp_uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_hash(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
   jsi::Value cpp_uniffi_flipt_react_native_fn_method_fliptclient_list_flags(
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
@@ -70,6 +74,10 @@ protected:
       size_t count);
   jsi::Value
   cpp_uniffi_flipt_react_native_checksum_method_fliptclient_evaluate_variant(
+      jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+      size_t count);
+  jsi::Value
+  cpp_uniffi_flipt_react_native_checksum_method_fliptclient_get_snapshot_hash(
       jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
       size_t count);
   jsi::Value

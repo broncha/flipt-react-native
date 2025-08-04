@@ -945,8 +945,9 @@ export interface FliptClientInterface {
   evaluateVariant(
     request: EvaluationRequest
   ) /*throws*/ : VariantEvaluationResponse;
+  getSnapshotHash() /*throws*/ : string;
   listFlags() /*throws*/ : Array<Flag>;
-  refresh() /*throws*/ : void;
+  refresh(previousHash: string | undefined) /*throws*/ : boolean;
 }
 
 export class FliptClient
@@ -1047,6 +1048,23 @@ export class FliptClient
     );
   }
 
+  public getSnapshotHash(): string /*throws*/ {
+    return FfiConverterString.lift(
+      uniffiCaller.rustCallWithError(
+        /*liftError:*/ FfiConverterTypeFliptError.lift.bind(
+          FfiConverterTypeFliptError
+        ),
+        /*caller:*/ (callStatus) => {
+          return nativeModule().ubrn_uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_hash(
+            uniffiTypeFliptClientObjectFactory.clonePointer(this),
+            callStatus
+          );
+        },
+        /*liftString:*/ FfiConverterString.lift
+      )
+    );
+  }
+
   public listFlags(): Array<Flag> /*throws*/ {
     return FfiConverterArrayTypeFlag.lift(
       uniffiCaller.rustCallWithError(
@@ -1064,18 +1082,21 @@ export class FliptClient
     );
   }
 
-  public refresh(): void /*throws*/ {
-    uniffiCaller.rustCallWithError(
-      /*liftError:*/ FfiConverterTypeFliptError.lift.bind(
-        FfiConverterTypeFliptError
-      ),
-      /*caller:*/ (callStatus) => {
-        nativeModule().ubrn_uniffi_flipt_react_native_fn_method_fliptclient_refresh(
-          uniffiTypeFliptClientObjectFactory.clonePointer(this),
-          callStatus
-        );
-      },
-      /*liftString:*/ FfiConverterString.lift
+  public refresh(previousHash: string | undefined): boolean /*throws*/ {
+    return FfiConverterBool.lift(
+      uniffiCaller.rustCallWithError(
+        /*liftError:*/ FfiConverterTypeFliptError.lift.bind(
+          FfiConverterTypeFliptError
+        ),
+        /*caller:*/ (callStatus) => {
+          return nativeModule().ubrn_uniffi_flipt_react_native_fn_method_fliptclient_refresh(
+            uniffiTypeFliptClientObjectFactory.clonePointer(this),
+            FfiConverterOptionalString.lower(previousHash),
+            callStatus
+          );
+        },
+        /*liftString:*/ FfiConverterString.lift
+      )
     );
   }
 
@@ -1255,6 +1276,14 @@ function uniffiEnsureInitialized() {
     );
   }
   if (
+    nativeModule().ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_get_snapshot_hash() !==
+    15741
+  ) {
+    throw new UniffiInternalError.ApiChecksumMismatch(
+      'uniffi_flipt_react_native_checksum_method_fliptclient_get_snapshot_hash'
+    );
+  }
+  if (
     nativeModule().ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_list_flags() !==
     56603
   ) {
@@ -1264,7 +1293,7 @@ function uniffiEnsureInitialized() {
   }
   if (
     nativeModule().ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_refresh() !==
-    35340
+    63691
   ) {
     throw new UniffiInternalError.ApiChecksumMismatch(
       'uniffi_flipt_react_native_checksum_method_fliptclient_refresh'

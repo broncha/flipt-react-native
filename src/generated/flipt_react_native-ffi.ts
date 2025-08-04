@@ -54,18 +54,24 @@ interface NativeModuleInterface {
     request: Uint8Array,
     uniffi_out_err: UniffiRustCallStatus
   ): Uint8Array;
+  ubrn_uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_hash(
+    ptr: bigint,
+    uniffi_out_err: UniffiRustCallStatus
+  ): Uint8Array;
   ubrn_uniffi_flipt_react_native_fn_method_fliptclient_list_flags(
     ptr: bigint,
     uniffi_out_err: UniffiRustCallStatus
   ): Uint8Array;
   ubrn_uniffi_flipt_react_native_fn_method_fliptclient_refresh(
     ptr: bigint,
+    previousHash: Uint8Array,
     uniffi_out_err: UniffiRustCallStatus
-  ): void;
+  ): number;
   ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_close(): number;
   ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_evaluate_batch(): number;
   ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_evaluate_boolean(): number;
   ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_evaluate_variant(): number;
+  ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_get_snapshot_hash(): number;
   ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_list_flags(): number;
   ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_refresh(): number;
   ubrn_uniffi_flipt_react_native_checksum_constructor_fliptclient_new(): number;

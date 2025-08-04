@@ -115,10 +115,12 @@ RustBuffer uniffi_flipt_react_native_fn_method_fliptclient_evaluate_boolean(
     void *ptr, RustBuffer request, RustCallStatus *uniffi_out_err);
 RustBuffer uniffi_flipt_react_native_fn_method_fliptclient_evaluate_variant(
     void *ptr, RustBuffer request, RustCallStatus *uniffi_out_err);
+RustBuffer uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_hash(
+    void *ptr, RustCallStatus *uniffi_out_err);
 RustBuffer uniffi_flipt_react_native_fn_method_fliptclient_list_flags(
     void *ptr, RustCallStatus *uniffi_out_err);
-void uniffi_flipt_react_native_fn_method_fliptclient_refresh(
-    void *ptr, RustCallStatus *uniffi_out_err);
+int8_t uniffi_flipt_react_native_fn_method_fliptclient_refresh(
+    void *ptr, RustBuffer previous_hash, RustCallStatus *uniffi_out_err);
 RustBuffer
 ffi_flipt_react_native_rustbuffer_alloc(uint64_t size,
                                         RustCallStatus *uniffi_out_err);
@@ -253,6 +255,8 @@ uint16_t
 uniffi_flipt_react_native_checksum_method_fliptclient_evaluate_boolean();
 uint16_t
 uniffi_flipt_react_native_checksum_method_fliptclient_evaluate_variant();
+uint16_t
+uniffi_flipt_react_native_checksum_method_fliptclient_get_snapshot_hash();
 uint16_t uniffi_flipt_react_native_checksum_method_fliptclient_list_flags();
 uint16_t uniffi_flipt_react_native_checksum_method_fliptclient_refresh();
 uint16_t uniffi_flipt_react_native_checksum_constructor_fliptclient_new();
@@ -1767,6 +1771,18 @@ NativeFliptReactNative::NativeFliptReactNative(
             ->cpp_uniffi_flipt_react_native_fn_method_fliptclient_evaluate_variant(
                 rt, thisVal, args, count);
       });
+  props["ubrn_uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_"
+        "hash"] = jsi::Function::createFromHostFunction(
+      rt,
+      jsi::PropNameID::forAscii(rt, "ubrn_uniffi_flipt_react_native_fn_method_"
+                                    "fliptclient_get_snapshot_hash"),
+      1,
+      [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+             const jsi::Value *args, size_t count) -> jsi::Value {
+        return this
+            ->cpp_uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_hash(
+                rt, thisVal, args, count);
+      });
   props["ubrn_uniffi_flipt_react_native_fn_method_fliptclient_list_flags"] =
       jsi::Function::createFromHostFunction(
           rt,
@@ -1785,7 +1801,7 @@ NativeFliptReactNative::NativeFliptReactNative(
           jsi::PropNameID::forAscii(
               rt,
               "ubrn_uniffi_flipt_react_native_fn_method_fliptclient_refresh"),
-          1,
+          2,
           [this](jsi::Runtime &rt, const jsi::Value &thisVal,
                  const jsi::Value *args, size_t count) -> jsi::Value {
             return this
@@ -1838,6 +1854,18 @@ NativeFliptReactNative::NativeFliptReactNative(
              const jsi::Value *args, size_t count) -> jsi::Value {
         return this
             ->cpp_uniffi_flipt_react_native_checksum_method_fliptclient_evaluate_variant(
+                rt, thisVal, args, count);
+      });
+  props["ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_get_"
+        "snapshot_hash"] = jsi::Function::createFromHostFunction(
+      rt,
+      jsi::PropNameID::forAscii(rt, "ubrn_uniffi_flipt_react_native_checksum_"
+                                    "method_fliptclient_get_snapshot_hash"),
+      0,
+      [this](jsi::Runtime &rt, const jsi::Value &thisVal,
+             const jsi::Value *args, size_t count) -> jsi::Value {
+        return this
+            ->cpp_uniffi_flipt_react_native_checksum_method_fliptclient_get_snapshot_hash(
                 rt, thisVal, args, count);
       });
   props["ubrn_uniffi_flipt_react_native_checksum_method_fliptclient_list_"
@@ -2090,6 +2118,22 @@ jsi::Value NativeFliptReactNative::
                                                                 value);
 }
 jsi::Value NativeFliptReactNative::
+    cpp_uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_hash(
+        jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+        size_t count) {
+  RustCallStatus status =
+      uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
+  auto value =
+      uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_hash(
+          uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]),
+          &status);
+  uniffi::flipt_react_native::Bridging<RustCallStatus>::copyIntoJs(
+      rt, callInvoker, status, args[count - 1]);
+
+  return uniffi::flipt_react_native::Bridging<RustBuffer>::toJs(rt, callInvoker,
+                                                                value);
+}
+jsi::Value NativeFliptReactNative::
     cpp_uniffi_flipt_react_native_fn_method_fliptclient_list_flags(
         jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
         size_t count) {
@@ -2109,12 +2153,15 @@ jsi::Value NativeFliptReactNative::
         size_t count) {
   RustCallStatus status =
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
-  uniffi_flipt_react_native_fn_method_fliptclient_refresh(
-      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+  auto value = uniffi_flipt_react_native_fn_method_fliptclient_refresh(
+      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]),
+      uniffi::flipt_react_native::Bridging<RustBuffer>::fromJs(rt, callInvoker,
+                                                               args[1]),
+      &status);
   uniffi::flipt_react_native::Bridging<RustCallStatus>::copyIntoJs(
       rt, callInvoker, status, args[count - 1]);
 
-  return jsi::Value::undefined();
+  return uniffi_jsi::Bridging<int8_t>::toJs(rt, callInvoker, value);
 }
 jsi::Value NativeFliptReactNative::
     cpp_uniffi_flipt_react_native_checksum_method_fliptclient_close(
@@ -2148,6 +2195,15 @@ jsi::Value NativeFliptReactNative::
         size_t count) {
   auto value =
       uniffi_flipt_react_native_checksum_method_fliptclient_evaluate_variant();
+
+  return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
+}
+jsi::Value NativeFliptReactNative::
+    cpp_uniffi_flipt_react_native_checksum_method_fliptclient_get_snapshot_hash(
+        jsi::Runtime &rt, const jsi::Value &thisVal, const jsi::Value *args,
+        size_t count) {
+  auto value =
+      uniffi_flipt_react_native_checksum_method_fliptclient_get_snapshot_hash();
 
   return uniffi_jsi::Bridging<uint16_t>::toJs(rt, callInvoker, value);
 }

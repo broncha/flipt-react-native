@@ -9,6 +9,7 @@ use fliptevaluation::models::flipt;
 use std::collections::HashMap;
 use serde::{Serialize, Deserialize};
 use serde_json;
+use sha2::{Sha256, Digest};
 uniffi::setup_scaffolding!();
 
 
@@ -63,13 +64,12 @@ impl FliptClient {
             config["reference"] = serde_json::Value::String(reference);
         }
 
-        if let Some(interval) = opts.update_interval {
-            config["update_interval"] = serde_json::Value::Number(serde_json::Number::from(interval));
-        }
+        let update_interval = opts.update_interval.unwrap_or(120);
+        config["update_interval"] = serde_json::Value::Number(serde_json::Number::from(update_interval));
 
-        if let Some(fetch_mode) = opts.fetch_mode.filter(|f| !f.is_empty()) {
-            config["fetch_mode"] = serde_json::Value::String(fetch_mode);
-        }
+        // Always set fetch_mode - use provided value or default to streaming
+        let fetch_mode = opts.fetch_mode.unwrap_or_else(|| "polling".to_string());
+        config["fetch_mode"] = serde_json::Value::String(fetch_mode);
 
         // Serialize configuration to JSON
         let config_json = serde_json::to_string(&config)
@@ -289,11 +289,62 @@ impl FliptClient {
         }).collect())
     }
 
-    pub fn refresh(&self) -> Result<(), FliptError> {
-        // This would typically refresh the snapshot from the server
-        // For now, we'll just return OK since the engine handles this internally
-        Ok(())
+    pub fn get_snapshot_hash(&self) -> Result<String, FliptError> {
+        // Try get_snapshot first, fallback to list_flags if it fails
+        match self.inner.get_snapshot() {
+            Ok(snapshot) => {
+                // First try to get the snapshot as a JSON value to check for digest field
+                let json_value = serde_json::to_value(&snapshot)
+                    .map_err(|e| FliptError::Internal {
+                        message: format!("JSON value conversion failed: {}", e)
+                    })?;
+
+                // Check if the snapshot has a digest field
+                if let Some(digest) = json_value.get("digest").and_then(|d| d.as_str()) {
+                    // Use the server-provided digest
+                    Ok(digest.to_string())
+                } else {
+                    // Fallback to computing SHA-256 of the entire snapshot
+                    let json = serde_json::to_string(&snapshot)
+                        .map_err(|e| FliptError::Internal {
+                            message: format!("JSON serialization failed: {}", e)
+                        })?;
+
+                    let mut hasher = Sha256::new();
+                    hasher.update(json.as_bytes());
+                    let hash = format!("{:x}", hasher.finalize());
+                    Ok(hash)
+                }
+            },
+            Err(e) => {
+                // Fallback to using list_flags for change detection
+                let flags = self.inner.list_flags()
+                    .map_err(|e2| FliptError::Internal {
+                        message: format!("Both get_snapshot and list_flags failed. get_snapshot: {}, list_flags: {}", e, e2)
+                    })?;
+
+                let json = serde_json::to_string(&flags)
+                    .map_err(|e| FliptError::Internal {
+                        message: format!("JSON serialization of flags failed: {}", e)
+                    })?;
+
+                let mut hasher = Sha256::new();
+                hasher.update(json.as_bytes());
+                let hash = format!("{:x}", hasher.finalize());
+                Ok(hash)
+            }
+        }
     }
+
+    pub fn refresh(&self, previous_hash: Option<String>) -> Result<bool, FliptError> {
+        let current_hash = self.get_snapshot_hash()?;
+
+        match previous_hash {
+            Some(prev) => Ok(current_hash != prev),
+            None => Ok(true) // First time checking, assume changed
+        }
+    }
+
 
     pub fn close(&self) {
         // Clean up resources if needed

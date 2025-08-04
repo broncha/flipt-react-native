@@ -77,15 +77,15 @@ export class FliptClient {
   constructor(options: ClientOptions = {}) {
     // Convert from our nice API to UniFFI's API
     const uniffiOptions: UniffiClientOptions = {
-      environment: options.environment, // undefined → undefined (works!)
+      environment: options.environment,
       namespace: options.namespace,
       url: options.url,
       updateInterval: options.updateInterval
         ? BigInt(options.updateInterval)
-        : undefined,
+        : BigInt(120),
       clientToken: options.clientToken,
       reference: options.reference,
-      fetchMode: options.fetchMode,
+      fetchMode: options.fetchMode || 'polling',
     };
 
     this.inner = new UniffiFliptClient(uniffiOptions);
@@ -139,10 +139,19 @@ export class FliptClient {
   }
 
   /**
-   * Refresh flag state
+   * Get current snapshot hash for change detection
    */
-  refresh() {
-    return this.inner.refresh();
+  getSnapshotHash() {
+    return this.inner.getSnapshotHash();
+  }
+
+  /**
+   * Check if snapshot has changed since previous hash
+   * @param previousHash - The hash from previous check (null for first check)
+   * @returns boolean - true if snapshot changed, false if unchanged
+   */
+  refresh(previousHash?: string | null): boolean {
+    return this.inner.refresh(previousHash || undefined);
   }
 
   /**
