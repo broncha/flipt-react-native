@@ -47,6 +47,7 @@ import {
   FfiConverterUInt64,
   RustBuffer,
   UniffiAbstractObject,
+  UniffiEnum,
   UniffiError,
   UniffiInternalError,
   UniffiRustCaller,
@@ -208,7 +209,7 @@ export type ClientOptions = {
   url: string | undefined;
   updateInterval: /*u64*/ bigint | undefined;
   reference: string | undefined;
-  clientToken: string | undefined;
+  authentication: Authentication | undefined;
   fetchMode: string | undefined;
 };
 
@@ -252,7 +253,7 @@ const FfiConverterTypeClientOptions = (() => {
         url: FfiConverterOptionalString.read(from),
         updateInterval: FfiConverterOptionalUInt64.read(from),
         reference: FfiConverterOptionalString.read(from),
-        clientToken: FfiConverterOptionalString.read(from),
+        authentication: FfiConverterOptionalTypeAuthentication.read(from),
         fetchMode: FfiConverterOptionalString.read(from),
       };
     }
@@ -262,7 +263,7 @@ const FfiConverterTypeClientOptions = (() => {
       FfiConverterOptionalString.write(value.url, into);
       FfiConverterOptionalUInt64.write(value.updateInterval, into);
       FfiConverterOptionalString.write(value.reference, into);
-      FfiConverterOptionalString.write(value.clientToken, into);
+      FfiConverterOptionalTypeAuthentication.write(value.authentication, into);
       FfiConverterOptionalString.write(value.fetchMode, into);
     }
     allocationSize(value: TypeName): number {
@@ -272,7 +273,9 @@ const FfiConverterTypeClientOptions = (() => {
         FfiConverterOptionalString.allocationSize(value.url) +
         FfiConverterOptionalUInt64.allocationSize(value.updateInterval) +
         FfiConverterOptionalString.allocationSize(value.reference) +
-        FfiConverterOptionalString.allocationSize(value.clientToken) +
+        FfiConverterOptionalTypeAuthentication.allocationSize(
+          value.authentication
+        ) +
         FfiConverterOptionalString.allocationSize(value.fetchMode)
       );
     }
@@ -662,6 +665,172 @@ const stringConverter = {
     ),
 };
 const FfiConverterString = uniffiCreateFfiConverterString(stringConverter);
+
+// Enum: Authentication
+export enum Authentication_Tags {
+  None = 'None',
+  ClientToken = 'ClientToken',
+  JwtToken = 'JwtToken',
+}
+export const Authentication = (() => {
+  type None__interface = {
+    tag: Authentication_Tags.None;
+  };
+
+  class None_ extends UniffiEnum implements None__interface {
+    /**
+     * @private
+     * This field is private and should not be used, use `tag` instead.
+     */
+    readonly [uniffiTypeNameSymbol] = 'Authentication';
+    readonly tag = Authentication_Tags.None;
+    constructor() {
+      super('Authentication', 'None');
+    }
+
+    static new(): None_ {
+      return new None_();
+    }
+
+    static instanceOf(obj: any): obj is None_ {
+      return obj.tag === Authentication_Tags.None;
+    }
+  }
+
+  type ClientToken__interface = {
+    tag: Authentication_Tags.ClientToken;
+    inner: Readonly<[string]>;
+  };
+
+  class ClientToken_ extends UniffiEnum implements ClientToken__interface {
+    /**
+     * @private
+     * This field is private and should not be used, use `tag` instead.
+     */
+    readonly [uniffiTypeNameSymbol] = 'Authentication';
+    readonly tag = Authentication_Tags.ClientToken;
+    readonly inner: Readonly<[string]>;
+    constructor(v0: string) {
+      super('Authentication', 'ClientToken');
+      this.inner = Object.freeze([v0]);
+    }
+
+    static new(v0: string): ClientToken_ {
+      return new ClientToken_(v0);
+    }
+
+    static instanceOf(obj: any): obj is ClientToken_ {
+      return obj.tag === Authentication_Tags.ClientToken;
+    }
+  }
+
+  type JwtToken__interface = {
+    tag: Authentication_Tags.JwtToken;
+    inner: Readonly<[string]>;
+  };
+
+  class JwtToken_ extends UniffiEnum implements JwtToken__interface {
+    /**
+     * @private
+     * This field is private and should not be used, use `tag` instead.
+     */
+    readonly [uniffiTypeNameSymbol] = 'Authentication';
+    readonly tag = Authentication_Tags.JwtToken;
+    readonly inner: Readonly<[string]>;
+    constructor(v0: string) {
+      super('Authentication', 'JwtToken');
+      this.inner = Object.freeze([v0]);
+    }
+
+    static new(v0: string): JwtToken_ {
+      return new JwtToken_(v0);
+    }
+
+    static instanceOf(obj: any): obj is JwtToken_ {
+      return obj.tag === Authentication_Tags.JwtToken;
+    }
+  }
+
+  function instanceOf(obj: any): obj is Authentication {
+    return obj[uniffiTypeNameSymbol] === 'Authentication';
+  }
+
+  return Object.freeze({
+    instanceOf,
+    None: None_,
+    ClientToken: ClientToken_,
+    JwtToken: JwtToken_,
+  });
+})();
+
+export type Authentication = InstanceType<
+  (typeof Authentication)[keyof Omit<typeof Authentication, 'instanceOf'>]
+>;
+
+// FfiConverter for enum Authentication
+const FfiConverterTypeAuthentication = (() => {
+  const ordinalConverter = FfiConverterInt32;
+  type TypeName = Authentication;
+  class FFIConverter extends AbstractFfiConverterByteArray<TypeName> {
+    read(from: RustBuffer): TypeName {
+      switch (ordinalConverter.read(from)) {
+        case 1:
+          return new Authentication.None();
+        case 2:
+          return new Authentication.ClientToken(FfiConverterString.read(from));
+        case 3:
+          return new Authentication.JwtToken(FfiConverterString.read(from));
+        default:
+          throw new UniffiInternalError.UnexpectedEnumCase();
+      }
+    }
+    write(value: TypeName, into: RustBuffer): void {
+      switch (value.tag) {
+        case Authentication_Tags.None: {
+          ordinalConverter.write(1, into);
+          return;
+        }
+        case Authentication_Tags.ClientToken: {
+          ordinalConverter.write(2, into);
+          const inner = value.inner;
+          FfiConverterString.write(inner[0], into);
+          return;
+        }
+        case Authentication_Tags.JwtToken: {
+          ordinalConverter.write(3, into);
+          const inner = value.inner;
+          FfiConverterString.write(inner[0], into);
+          return;
+        }
+        default:
+          // Throwing from here means that Authentication_Tags hasn't matched an ordinal.
+          throw new UniffiInternalError.UnexpectedEnumCase();
+      }
+    }
+    allocationSize(value: TypeName): number {
+      switch (value.tag) {
+        case Authentication_Tags.None: {
+          return ordinalConverter.allocationSize(1);
+        }
+        case Authentication_Tags.ClientToken: {
+          const inner = value.inner;
+          let size = ordinalConverter.allocationSize(2);
+          size += FfiConverterString.allocationSize(inner[0]);
+          return size;
+        }
+        case Authentication_Tags.JwtToken: {
+          const inner = value.inner;
+          let size = ordinalConverter.allocationSize(3);
+          size += FfiConverterString.allocationSize(inner[0]);
+          return size;
+        }
+        default:
+          throw new UniffiInternalError.UnexpectedEnumCase();
+      }
+    }
+  }
+  return new FFIConverter();
+})();
 
 // Error type: FliptError
 
@@ -1221,6 +1390,11 @@ const FfiConverterArrayTypeFlag = new FfiConverterArray(FfiConverterTypeFlag);
 // FfiConverter for Array<string>
 const FfiConverterArrayString = new FfiConverterArray(FfiConverterString);
 
+// FfiConverter for Authentication | undefined
+const FfiConverterOptionalTypeAuthentication = new FfiConverterOptional(
+  FfiConverterTypeAuthentication
+);
+
 /**
  * This should be called before anything else.
  *
@@ -1312,6 +1486,7 @@ function uniffiEnsureInitialized() {
 export default Object.freeze({
   initialize: uniffiEnsureInitialized,
   converters: {
+    FfiConverterTypeAuthentication,
     FfiConverterTypeBatchEvaluationResponse,
     FfiConverterTypeBooleanEvaluationResponse,
     FfiConverterTypeClientOptions,

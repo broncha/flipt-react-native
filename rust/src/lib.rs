@@ -25,10 +25,18 @@ pub struct ClientOptions {
     pub update_interval: Option<u64>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub reference: Option<String>,
-    #[serde(default, skip_serializing_if = "Option::is_none", rename = "clientToken")]
-    pub client_token: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub authentication: Option<Authentication>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub fetch_mode: Option<String>,
+}
+
+#[derive(uniffi::Enum, Serialize, Deserialize, Clone)]
+#[serde(rename_all = "snake_case")]
+pub enum Authentication {
+    None,
+    ClientToken(String),
+    JwtToken(String),
 }
 
 
@@ -54,10 +62,11 @@ impl FliptClient {
         });
 
         // Add optional fields if they exist
-        if let Some(token) = opts.client_token.filter(|t| !t.is_empty()) {
-            config["authentication"] = serde_json::json!({
-                "client_token": token
-            });
+        if let Some(auth) = opts.authentication {
+            config["authentication"] = serde_json::to_value(auth)
+                .map_err(|e| FliptError::InvalidRequest {
+                    message: format!("Failed to serialize authentication: {}", e)
+                })?;
         }
 
         if let Some(reference) = opts.reference.filter(|r| !r.is_empty()) {

@@ -3,6 +3,7 @@ import {
   FliptClient as UniffiFliptClient,
   ClientOptions as UniffiClientOptions,
   EvaluationRequest as UniffiEvaluationRequest,
+  Authentication,
 } from './generated/flipt_react_native';
 
 // Match the flipt-client-js API exactly
@@ -30,7 +31,10 @@ export interface ClientOptions {
   /**
    * The authentication client token.
    */
-  clientToken?: string;
+  authentication?: {
+    client_token?: string;
+    jwt_token?: string;
+  };
   /**
    * The reference to use when fetching flag state.
    */
@@ -76,6 +80,17 @@ export class FliptClient {
 
   constructor(options: ClientOptions = {}) {
     // Convert from our nice API to UniFFI's API
+    let authentication;
+    if (options.authentication?.client_token) {
+      authentication = new Authentication.ClientToken(
+        options.authentication.client_token
+      );
+    } else if (options.authentication?.jwt_token) {
+      authentication = new Authentication.JwtToken(
+        options.authentication.jwt_token
+      );
+    }
+
     const uniffiOptions: UniffiClientOptions = {
       environment: options.environment,
       namespace: options.namespace,
@@ -83,7 +98,7 @@ export class FliptClient {
       updateInterval: options.updateInterval
         ? BigInt(options.updateInterval)
         : BigInt(120),
-      clientToken: options.clientToken,
+      authentication,
       reference: options.reference,
       fetchMode: options.fetchMode || 'polling',
     };

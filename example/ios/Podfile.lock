@@ -1654,7 +1654,7 @@ PODS:
     - React-logger (= 0.79.2)
     - React-perflogger (= 0.79.2)
     - React-utils (= 0.79.2)
-  - ReactNativeFlipt (0.1.2):
+  - ReactNativeFlipt (0.1.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1979,7 +1979,7 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 04d5eb15eb46be6720e17a4a7fa92940a776e584
   ReactCodegen: c63eda03ba1d94353fb97b031fc84f75a0d125ba
   ReactCommon: 76d2dc87136d0a667678668b86f0fca0c16fdeb0
-  ReactNativeFlipt: 96f779c104b9b79902cf51f424748f4c1d1811fc
+  ReactNativeFlipt: ef675eb167f62ed101fcc6959ac09207911ca8b9
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   uniffi-bindgen-react-native: 89b861f6865083493ec6252a8409053db6d77d2d
   Yoga: c758bfb934100bb4bf9cbaccb52557cee35e8bdf

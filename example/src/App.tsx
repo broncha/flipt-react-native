@@ -66,14 +66,9 @@ const styles = StyleSheet.create({
 });
 
 const MyComponent = () => {
-  const result = useFliptBoolean(
-    'enable_clear_courese_progress',
-    false,
-    'asdasd',
-    {
-      email: 'broncha@rajesharma.me',
-    }
-  );
+  const result = useFliptBoolean('enable_clear_course_progress', false, 'xyz', {
+    email: 'broncha@rajesharma.me',
+  });
   console.log(result);
   return <Text>{JSON.stringify(result ?? {}, null, 2)}</Text>;
 };
