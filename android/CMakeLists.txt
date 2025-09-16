@@ -4,6 +4,7 @@ project(ReactNativeFlipt)
 
 set (CMAKE_VERBOSE_MAKEFILE ON)
 set (CMAKE_CXX_STANDARD 17)
+set (ANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES ON)
 
 # Resolve the path to the uniffi-bindgen-react-native package
 execute_process(
