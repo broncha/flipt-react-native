@@ -4,7 +4,6 @@ project(ReactNativeFlipt)
 
 set (CMAKE_VERBOSE_MAKEFILE ON)
 set (CMAKE_CXX_STANDARD 17)
-set (ANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES ON)
 
 # Resolve the path to the uniffi-bindgen-react-native package
 execute_process(
@@ -37,6 +36,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -frtti")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
+
+# Set linker flags for 16KB page size alignment (required for Android 15+)
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,max-page-size=16384")
 
 cmake_path(
   SET MY_RUST_LIB

@@ -7,18 +7,18 @@ edition = "2024"
 crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
-uniffi = { version = "0.29.3", features = [ "cli" ] }
+uniffi = { version = "0.30", features = [ "cli" ] }
 flipt-engine-ffi = { path = "../flipt-client-sdks/flipt-engine-ffi" }
 flipt-evaluation = { path = "../flipt-client-sdks/flipt-evaluation" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-uniffi_build = "0.29.4"
+uniffi_build = "0.30"
 chrono = { version = "0.4", features = ["serde"] }
 sha2 = "0.10"
 
 [build-dependencies]
-uniffi = { version = "0.29.3", features = [ "build" ] }
-uniffi_build = "0.29.4"
+uniffi = { version = "0.30", features = [ "build" ] }
+uniffi_build = "0.30"
 
 [profile.release]
 strip = true

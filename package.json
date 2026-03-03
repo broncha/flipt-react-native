@@ -93,7 +93,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": ">=0.84"
   },
   "workspaces": [
     "example"
@@ -169,6 +169,6 @@
     "version": "0.52.0"
   },
   "dependencies": {
-    "uniffi-bindgen-react-native": "https://github.com/jhugman/uniffi-bindgen-react-native#main"
+    "uniffi-bindgen-react-native": "^0.30.0-1"
   }
 }

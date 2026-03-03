@@ -17,110 +17,108 @@ namespace jsi = facebook::jsi;
 extern "C" {
 typedef void (*UniffiRustFutureContinuationCallback)(uint64_t data,
                                                      int8_t poll_result);
-typedef void (*UniffiForeignFutureFree)(uint64_t handle);
+typedef void (*UniffiForeignFutureDroppedCallback)(uint64_t handle);
 typedef void (*UniffiCallbackInterfaceFree)(uint64_t handle);
-typedef struct UniffiForeignFuture {
+typedef uint64_t (*UniffiCallbackInterfaceClone)(uint64_t handle);
+typedef struct UniffiForeignFutureDroppedCallbackStruct {
   uint64_t handle;
-  UniffiForeignFutureFree free;
-} UniffiForeignFuture;
-typedef struct UniffiForeignFutureStructU8 {
+  UniffiForeignFutureDroppedCallback free;
+} UniffiForeignFutureDroppedCallbackStruct;
+typedef struct UniffiForeignFutureResultU8 {
   uint8_t return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructU8;
+} UniffiForeignFutureResultU8;
 typedef void (*UniffiForeignFutureCompleteU8)(
-    uint64_t callback_data, UniffiForeignFutureStructU8 result);
-typedef struct UniffiForeignFutureStructI8 {
+    uint64_t callback_data, UniffiForeignFutureResultU8 result);
+typedef struct UniffiForeignFutureResultI8 {
   int8_t return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructI8;
+} UniffiForeignFutureResultI8;
 typedef void (*UniffiForeignFutureCompleteI8)(
-    uint64_t callback_data, UniffiForeignFutureStructI8 result);
-typedef struct UniffiForeignFutureStructU16 {
+    uint64_t callback_data, UniffiForeignFutureResultI8 result);
+typedef struct UniffiForeignFutureResultU16 {
   uint16_t return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructU16;
+} UniffiForeignFutureResultU16;
 typedef void (*UniffiForeignFutureCompleteU16)(
-    uint64_t callback_data, UniffiForeignFutureStructU16 result);
-typedef struct UniffiForeignFutureStructI16 {
+    uint64_t callback_data, UniffiForeignFutureResultU16 result);
+typedef struct UniffiForeignFutureResultI16 {
   int16_t return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructI16;
+} UniffiForeignFutureResultI16;
 typedef void (*UniffiForeignFutureCompleteI16)(
-    uint64_t callback_data, UniffiForeignFutureStructI16 result);
-typedef struct UniffiForeignFutureStructU32 {
+    uint64_t callback_data, UniffiForeignFutureResultI16 result);
+typedef struct UniffiForeignFutureResultU32 {
   uint32_t return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructU32;
+} UniffiForeignFutureResultU32;
 typedef void (*UniffiForeignFutureCompleteU32)(
-    uint64_t callback_data, UniffiForeignFutureStructU32 result);
-typedef struct UniffiForeignFutureStructI32 {
+    uint64_t callback_data, UniffiForeignFutureResultU32 result);
+typedef struct UniffiForeignFutureResultI32 {
   int32_t return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructI32;
+} UniffiForeignFutureResultI32;
 typedef void (*UniffiForeignFutureCompleteI32)(
-    uint64_t callback_data, UniffiForeignFutureStructI32 result);
-typedef struct UniffiForeignFutureStructU64 {
+    uint64_t callback_data, UniffiForeignFutureResultI32 result);
+typedef struct UniffiForeignFutureResultU64 {
   uint64_t return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructU64;
+} UniffiForeignFutureResultU64;
 typedef void (*UniffiForeignFutureCompleteU64)(
-    uint64_t callback_data, UniffiForeignFutureStructU64 result);
-typedef struct UniffiForeignFutureStructI64 {
+    uint64_t callback_data, UniffiForeignFutureResultU64 result);
+typedef struct UniffiForeignFutureResultI64 {
   int64_t return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructI64;
+} UniffiForeignFutureResultI64;
 typedef void (*UniffiForeignFutureCompleteI64)(
-    uint64_t callback_data, UniffiForeignFutureStructI64 result);
-typedef struct UniffiForeignFutureStructF32 {
+    uint64_t callback_data, UniffiForeignFutureResultI64 result);
+typedef struct UniffiForeignFutureResultF32 {
   float return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructF32;
+} UniffiForeignFutureResultF32;
 typedef void (*UniffiForeignFutureCompleteF32)(
-    uint64_t callback_data, UniffiForeignFutureStructF32 result);
-typedef struct UniffiForeignFutureStructF64 {
+    uint64_t callback_data, UniffiForeignFutureResultF32 result);
+typedef struct UniffiForeignFutureResultF64 {
   double return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructF64;
+} UniffiForeignFutureResultF64;
 typedef void (*UniffiForeignFutureCompleteF64)(
-    uint64_t callback_data, UniffiForeignFutureStructF64 result);
-typedef struct UniffiForeignFutureStructPointer {
-  void *return_value;
-  RustCallStatus call_status;
-} UniffiForeignFutureStructPointer;
-typedef void (*UniffiForeignFutureCompletePointer)(
-    uint64_t callback_data, UniffiForeignFutureStructPointer result);
-typedef struct UniffiForeignFutureStructRustBuffer {
+    uint64_t callback_data, UniffiForeignFutureResultF64 result);
+typedef struct UniffiForeignFutureResultRustBuffer {
   RustBuffer return_value;
   RustCallStatus call_status;
-} UniffiForeignFutureStructRustBuffer;
+} UniffiForeignFutureResultRustBuffer;
 typedef void (*UniffiForeignFutureCompleteRustBuffer)(
-    uint64_t callback_data, UniffiForeignFutureStructRustBuffer result);
-typedef struct UniffiForeignFutureStructVoid {
+    uint64_t callback_data, UniffiForeignFutureResultRustBuffer result);
+typedef struct UniffiForeignFutureResultVoid {
   RustCallStatus call_status;
-} UniffiForeignFutureStructVoid;
+} UniffiForeignFutureResultVoid;
 typedef void (*UniffiForeignFutureCompleteVoid)(
-    uint64_t callback_data, UniffiForeignFutureStructVoid result);
-void *
-uniffi_flipt_react_native_fn_clone_fliptclient(void *ptr,
-                                               RustCallStatus *uniffi_out_err);
+    uint64_t callback_data, UniffiForeignFutureResultVoid result);
+/*handle*/ uint64_t uniffi_flipt_react_native_fn_clone_fliptclient(
+    /*handle*/ uint64_t handle, RustCallStatus *uniffi_out_err);
 void uniffi_flipt_react_native_fn_free_fliptclient(
-    void *ptr, RustCallStatus *uniffi_out_err);
-void *uniffi_flipt_react_native_fn_constructor_fliptclient_new(
+    /*handle*/ uint64_t handle, RustCallStatus *uniffi_out_err);
+/*handle*/ uint64_t uniffi_flipt_react_native_fn_constructor_fliptclient_new(
     RustBuffer opts, RustCallStatus *uniffi_out_err);
 void uniffi_flipt_react_native_fn_method_fliptclient_close(
-    void *ptr, RustCallStatus *uniffi_out_err);
+    /*handle*/ uint64_t ptr, RustCallStatus *uniffi_out_err);
 RustBuffer uniffi_flipt_react_native_fn_method_fliptclient_evaluate_batch(
-    void *ptr, RustBuffer requests, RustCallStatus *uniffi_out_err);
+    /*handle*/ uint64_t ptr, RustBuffer requests,
+    RustCallStatus *uniffi_out_err);
 RustBuffer uniffi_flipt_react_native_fn_method_fliptclient_evaluate_boolean(
-    void *ptr, RustBuffer request, RustCallStatus *uniffi_out_err);
+    /*handle*/ uint64_t ptr, RustBuffer request,
+    RustCallStatus *uniffi_out_err);
 RustBuffer uniffi_flipt_react_native_fn_method_fliptclient_evaluate_variant(
-    void *ptr, RustBuffer request, RustCallStatus *uniffi_out_err);
+    /*handle*/ uint64_t ptr, RustBuffer request,
+    RustCallStatus *uniffi_out_err);
 RustBuffer uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_hash(
-    void *ptr, RustCallStatus *uniffi_out_err);
+    /*handle*/ uint64_t ptr, RustCallStatus *uniffi_out_err);
 RustBuffer uniffi_flipt_react_native_fn_method_fliptclient_list_flags(
-    void *ptr, RustCallStatus *uniffi_out_err);
+    /*handle*/ uint64_t ptr, RustCallStatus *uniffi_out_err);
 int8_t uniffi_flipt_react_native_fn_method_fliptclient_refresh(
-    void *ptr, RustBuffer previous_hash, RustCallStatus *uniffi_out_err);
+    /*handle*/ uint64_t ptr, RustBuffer previous_hash,
+    RustCallStatus *uniffi_out_err);
 RustBuffer
 ffi_flipt_react_native_rustbuffer_alloc(uint64_t size,
                                         RustCallStatus *uniffi_out_err);
@@ -221,15 +219,6 @@ void ffi_flipt_react_native_rust_future_cancel_f64(
 void ffi_flipt_react_native_rust_future_free_f64(
     /*handle*/ uint64_t handle);
 double ffi_flipt_react_native_rust_future_complete_f64(
-    /*handle*/ uint64_t handle, RustCallStatus *uniffi_out_err);
-void ffi_flipt_react_native_rust_future_poll_pointer(
-    /*handle*/ uint64_t handle, UniffiRustFutureContinuationCallback callback,
-    /*handle*/ uint64_t callback_data);
-void ffi_flipt_react_native_rust_future_cancel_pointer(
-    /*handle*/ uint64_t handle);
-void ffi_flipt_react_native_rust_future_free_pointer(
-    /*handle*/ uint64_t handle);
-void *ffi_flipt_react_native_rust_future_complete_pointer(
     /*handle*/ uint64_t handle, RustCallStatus *uniffi_out_err);
 void ffi_flipt_react_native_rust_future_poll_rust_buffer(
     /*handle*/ uint64_t handle, UniffiRustFutureContinuationCallback callback,
@@ -540,7 +529,7 @@ static void callback(uint64_t rs_data, int8_t rs_pollResult) {
   rsLambda(rs_data, rs_pollResult);
 }
 
-static UniffiRustFutureContinuationCallback
+[[maybe_unused]] static UniffiRustFutureContinuationCallback
 makeCallbackFunction( // uniffi::flipt_react_native::cb::rustfuturecontinuationcallback
     jsi::Runtime &rt,
     std::shared_ptr<uniffi_runtime::UniffiCallInvoker> callInvoker,
@@ -584,42 +573,11 @@ static void cleanup() {
   rsLambda = nullptr;
 }
 } // namespace uniffi::flipt_react_native::cb::rustfuturecontinuationcallback
-  // Implementation of callback function calling from JS to Rust
-  // ForeignFutureFree, passed from Rust to JS as part of async callbacks.
-namespace uniffi::flipt_react_native {
-using CallInvoker = uniffi_runtime::UniffiCallInvoker;
-
-template <> struct Bridging<UniffiForeignFutureFree> {
-  static jsi::Value toJs(jsi::Runtime &rt,
-                         std::shared_ptr<CallInvoker> callInvoker,
-                         UniffiForeignFutureFree rsCallback) {
-    return jsi::Function::createFromHostFunction(
-        rt, jsi::PropNameID::forAscii(rt, "--ForeignFutureFree"), 1,
-        [rsCallback, callInvoker](jsi::Runtime &rt, const jsi::Value &thisValue,
-                                  const jsi::Value *arguments,
-                                  size_t count) -> jsi::Value {
-          return intoRust(rt, callInvoker, thisValue, arguments, count,
-                          rsCallback);
-        });
-  }
-
-  static jsi::Value intoRust(jsi::Runtime &rt,
-                             std::shared_ptr<CallInvoker> callInvoker,
-                             const jsi::Value &thisValue,
-                             const jsi::Value *args, size_t count,
-                             UniffiForeignFutureFree func) {
-    // Convert the arguments into the Rust, with Bridging<T>::fromJs,
-    // then call the rs_callback with those arguments.
-    func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]));
-
-    return jsi::Value::undefined();
-  }
-};
-} // namespace uniffi::flipt_react_native
-  // Implementation of free callback function CallbackInterfaceFree
+  // Implementation of callback function calling from Rust to JS
+  // ForeignFutureDroppedCallback
 
 // Callback function:
-// uniffi::flipt_react_native::st::foreignfuture::foreignfuture::free::UniffiCallbackInterfaceFree
+// uniffi::flipt_react_native::cb::foreignfuturedroppedcallback::UniffiForeignFutureDroppedCallback
 //
 // We have the following constraints:
 // - we need to pass a function pointer to Rust.
@@ -632,7 +590,7 @@ template <> struct Bridging<UniffiForeignFutureFree> {
 //
 // We then give the `callback` function pointer to Rust which will call the
 // lambda sometime in the future.
-namespace uniffi::flipt_react_native::st::foreignfuture::foreignfuture::free {
+namespace uniffi::flipt_react_native::cb::foreignfuturedroppedcallback {
 using namespace facebook;
 
 // We need to store a lambda in a global so we can call it from
@@ -660,7 +618,7 @@ static void body(jsi::Runtime &rt,
     auto uniffiResult = cb.call(rt, js_handle);
 
   } catch (const jsi::JSError &error) {
-    std::cout << "Error in callback UniffiCallbackInterfaceFree: "
+    std::cout << "Error in callback UniffiForeignFutureDroppedCallback: "
               << error.what() << std::endl;
     throw error;
   }
@@ -685,8 +643,8 @@ static void callback(uint64_t rs_handle) {
   rsLambda(rs_handle);
 }
 
-static UniffiCallbackInterfaceFree
-makeCallbackFunction( // uniffi::flipt_react_native::st::foreignfuture::foreignfuture::free
+[[maybe_unused]] static UniffiForeignFutureDroppedCallback
+makeCallbackFunction( // uniffi::flipt_react_native::cb::foreignfuturedroppedcallback
     jsi::Runtime &rt,
     std::shared_ptr<uniffi_runtime::UniffiCallInvoker> callInvoker,
     const jsi::Value &value) {
@@ -726,32 +684,35 @@ static void cleanup() {
   // out, then the pointer will no longer be left dangling.
   rsLambda = nullptr;
 }
-} // namespace
-  // uniffi::flipt_react_native::st::foreignfuture::foreignfuture::free
+} // namespace uniffi::flipt_react_native::cb::foreignfuturedroppedcallback
+  // Implementation of free callback function CallbackInterfaceFree
+
 namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFuture> {
-  static UniffiForeignFuture fromJs(jsi::Runtime &rt,
-                                    std::shared_ptr<CallInvoker> callInvoker,
-                                    const jsi::Value &jsValue) {
+template <> struct Bridging<UniffiForeignFutureDroppedCallbackStruct> {
+  static UniffiForeignFutureDroppedCallbackStruct
+  fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
+         const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
-      throw jsi::JSError(rt, "Expected an object for UniffiForeignFuture");
+      throw jsi::JSError(
+          rt,
+          "Expected an object for UniffiForeignFutureDroppedCallbackStruct");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFuture rsObject;
+    UniffiForeignFutureDroppedCallbackStruct rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.handle = uniffi_jsi::Bridging<uint64_t>::fromJs(
         rt, callInvoker, jsObject.getProperty(rt, "handle"));
-    rsObject.free = uniffi::flipt_react_native::st::foreignfuture::
-        foreignfuture::free::makeCallbackFunction(
+    rsObject.free = uniffi::flipt_react_native::cb::
+        foreignfuturedroppedcallback::makeCallbackFunction(
             rt, callInvoker, jsObject.getProperty(rt, "free"));
 
     return rsObject;
@@ -763,21 +724,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructU8> {
-  static UniffiForeignFutureStructU8
+template <> struct Bridging<UniffiForeignFutureResultU8> {
+  static UniffiForeignFutureResultU8
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructU8");
+                         "Expected an object for UniffiForeignFutureResultU8");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructU8 rsObject;
+    UniffiForeignFutureResultU8 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<uint8_t>::fromJs(
@@ -819,7 +780,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteU8> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructU8>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultU8>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -829,21 +790,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructI8> {
-  static UniffiForeignFutureStructI8
+template <> struct Bridging<UniffiForeignFutureResultI8> {
+  static UniffiForeignFutureResultI8
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructI8");
+                         "Expected an object for UniffiForeignFutureResultI8");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructI8 rsObject;
+    UniffiForeignFutureResultI8 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<int8_t>::fromJs(
@@ -885,7 +846,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteI8> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructI8>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultI8>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -895,21 +856,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructU16> {
-  static UniffiForeignFutureStructU16
+template <> struct Bridging<UniffiForeignFutureResultU16> {
+  static UniffiForeignFutureResultU16
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructU16");
+                         "Expected an object for UniffiForeignFutureResultU16");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructU16 rsObject;
+    UniffiForeignFutureResultU16 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<uint16_t>::fromJs(
@@ -952,7 +913,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteU16> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructU16>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultU16>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -962,21 +923,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructI16> {
-  static UniffiForeignFutureStructI16
+template <> struct Bridging<UniffiForeignFutureResultI16> {
+  static UniffiForeignFutureResultI16
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructI16");
+                         "Expected an object for UniffiForeignFutureResultI16");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructI16 rsObject;
+    UniffiForeignFutureResultI16 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<int16_t>::fromJs(
@@ -1019,7 +980,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteI16> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructI16>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultI16>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -1029,21 +990,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructU32> {
-  static UniffiForeignFutureStructU32
+template <> struct Bridging<UniffiForeignFutureResultU32> {
+  static UniffiForeignFutureResultU32
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructU32");
+                         "Expected an object for UniffiForeignFutureResultU32");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructU32 rsObject;
+    UniffiForeignFutureResultU32 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<uint32_t>::fromJs(
@@ -1086,7 +1047,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteU32> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructU32>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultU32>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -1096,21 +1057,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructI32> {
-  static UniffiForeignFutureStructI32
+template <> struct Bridging<UniffiForeignFutureResultI32> {
+  static UniffiForeignFutureResultI32
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructI32");
+                         "Expected an object for UniffiForeignFutureResultI32");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructI32 rsObject;
+    UniffiForeignFutureResultI32 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<int32_t>::fromJs(
@@ -1153,7 +1114,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteI32> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructI32>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultI32>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -1163,21 +1124,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructU64> {
-  static UniffiForeignFutureStructU64
+template <> struct Bridging<UniffiForeignFutureResultU64> {
+  static UniffiForeignFutureResultU64
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructU64");
+                         "Expected an object for UniffiForeignFutureResultU64");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructU64 rsObject;
+    UniffiForeignFutureResultU64 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<uint64_t>::fromJs(
@@ -1220,7 +1181,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteU64> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructU64>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultU64>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -1230,21 +1191,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructI64> {
-  static UniffiForeignFutureStructI64
+template <> struct Bridging<UniffiForeignFutureResultI64> {
+  static UniffiForeignFutureResultI64
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructI64");
+                         "Expected an object for UniffiForeignFutureResultI64");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructI64 rsObject;
+    UniffiForeignFutureResultI64 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<int64_t>::fromJs(
@@ -1287,7 +1248,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteI64> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructI64>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultI64>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -1297,21 +1258,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructF32> {
-  static UniffiForeignFutureStructF32
+template <> struct Bridging<UniffiForeignFutureResultF32> {
+  static UniffiForeignFutureResultF32
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructF32");
+                         "Expected an object for UniffiForeignFutureResultF32");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructF32 rsObject;
+    UniffiForeignFutureResultF32 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<float>::fromJs(
@@ -1354,7 +1315,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteF32> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructF32>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultF32>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -1364,21 +1325,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructF64> {
-  static UniffiForeignFutureStructF64
+template <> struct Bridging<UniffiForeignFutureResultF64> {
+  static UniffiForeignFutureResultF64
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(rt,
-                         "Expected an object for UniffiForeignFutureStructF64");
+                         "Expected an object for UniffiForeignFutureResultF64");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructF64 rsObject;
+    UniffiForeignFutureResultF64 rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value = uniffi_jsi::Bridging<double>::fromJs(
@@ -1421,7 +1382,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteF64> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructF64>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultF64>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -1431,89 +1392,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructPointer> {
-  static UniffiForeignFutureStructPointer
+template <> struct Bridging<UniffiForeignFutureResultRustBuffer> {
+  static UniffiForeignFutureResultRustBuffer
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(
-          rt, "Expected an object for UniffiForeignFutureStructPointer");
+          rt, "Expected an object for UniffiForeignFutureResultRustBuffer");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructPointer rsObject;
-
-    // Create the vtable from the js callbacks.
-    rsObject.return_value = uniffi_jsi::Bridging<void *>::fromJs(
-        rt, callInvoker, jsObject.getProperty(rt, "returnValue"));
-    rsObject.call_status =
-        uniffi::flipt_react_native::Bridging<RustCallStatus>::fromJs(
-            rt, callInvoker, jsObject.getProperty(rt, "callStatus"));
-
-    return rsObject;
-  }
-};
-
-} // namespace uniffi::flipt_react_native
-  // Implementation of callback function calling from JS to Rust
-  // ForeignFutureCompletePointer, passed from Rust to JS as part of async
-  // callbacks.
-namespace uniffi::flipt_react_native {
-using CallInvoker = uniffi_runtime::UniffiCallInvoker;
-
-template <> struct Bridging<UniffiForeignFutureCompletePointer> {
-  static jsi::Value toJs(jsi::Runtime &rt,
-                         std::shared_ptr<CallInvoker> callInvoker,
-                         UniffiForeignFutureCompletePointer rsCallback) {
-    return jsi::Function::createFromHostFunction(
-        rt, jsi::PropNameID::forAscii(rt, "--ForeignFutureCompletePointer"), 2,
-        [rsCallback, callInvoker](jsi::Runtime &rt, const jsi::Value &thisValue,
-                                  const jsi::Value *arguments,
-                                  size_t count) -> jsi::Value {
-          return intoRust(rt, callInvoker, thisValue, arguments, count,
-                          rsCallback);
-        });
-  }
-
-  static jsi::Value intoRust(jsi::Runtime &rt,
-                             std::shared_ptr<CallInvoker> callInvoker,
-                             const jsi::Value &thisValue,
-                             const jsi::Value *args, size_t count,
-                             UniffiForeignFutureCompletePointer func) {
-    // Convert the arguments into the Rust, with Bridging<T>::fromJs,
-    // then call the rs_callback with those arguments.
-    func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
-         uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructPointer>::fromJs(rt, callInvoker,
-                                                       args[1]));
-
-    return jsi::Value::undefined();
-  }
-};
-} // namespace uniffi::flipt_react_native
-namespace uniffi::flipt_react_native {
-using namespace facebook;
-using CallInvoker = uniffi_runtime::UniffiCallInvoker;
-
-template <> struct Bridging<UniffiForeignFutureStructRustBuffer> {
-  static UniffiForeignFutureStructRustBuffer
-  fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
-         const jsi::Value &jsValue) {
-    // Check if the input is an object
-    if (!jsValue.isObject()) {
-      throw jsi::JSError(
-          rt, "Expected an object for UniffiForeignFutureStructRustBuffer");
-    }
-
-    // Get the object from the jsi::Value
-    auto jsObject = jsValue.getObject(rt);
-
-    // Create the vtable struct
-    UniffiForeignFutureStructRustBuffer rsObject;
+    UniffiForeignFutureResultRustBuffer rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.return_value =
@@ -1558,7 +1451,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteRustBuffer> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructRustBuffer>::fromJs(rt, callInvoker,
+             UniffiForeignFutureResultRustBuffer>::fromJs(rt, callInvoker,
                                                           args[1]));
 
     return jsi::Value::undefined();
@@ -1569,21 +1462,21 @@ namespace uniffi::flipt_react_native {
 using namespace facebook;
 using CallInvoker = uniffi_runtime::UniffiCallInvoker;
 
-template <> struct Bridging<UniffiForeignFutureStructVoid> {
-  static UniffiForeignFutureStructVoid
+template <> struct Bridging<UniffiForeignFutureResultVoid> {
+  static UniffiForeignFutureResultVoid
   fromJs(jsi::Runtime &rt, std::shared_ptr<CallInvoker> callInvoker,
          const jsi::Value &jsValue) {
     // Check if the input is an object
     if (!jsValue.isObject()) {
       throw jsi::JSError(
-          rt, "Expected an object for UniffiForeignFutureStructVoid");
+          rt, "Expected an object for UniffiForeignFutureResultVoid");
     }
 
     // Get the object from the jsi::Value
     auto jsObject = jsValue.getObject(rt);
 
     // Create the vtable struct
-    UniffiForeignFutureStructVoid rsObject;
+    UniffiForeignFutureResultVoid rsObject;
 
     // Create the vtable from the js callbacks.
     rsObject.call_status =
@@ -1624,7 +1517,7 @@ template <> struct Bridging<UniffiForeignFutureCompleteVoid> {
     // then call the rs_callback with those arguments.
     func(uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]),
          uniffi::flipt_react_native::Bridging<
-             UniffiForeignFutureStructVoid>::fromJs(rt, callInvoker, args[1]));
+             UniffiForeignFutureResultVoid>::fromJs(rt, callInvoker, args[1]));
 
     return jsi::Value::undefined();
   }
@@ -1969,8 +1862,9 @@ void NativeFliptReactNative::set(jsi::Runtime &rt, const jsi::PropNameID &name,
 NativeFliptReactNative::~NativeFliptReactNative() {
   // Cleanup for callback function RustFutureContinuationCallback
   uniffi::flipt_react_native::cb::rustfuturecontinuationcallback::cleanup();
+  // Cleanup for callback function ForeignFutureDroppedCallback
+  uniffi::flipt_react_native::cb::foreignfuturedroppedcallback::cleanup();
   // Cleanup for "free" callback function CallbackInterfaceFree
-  uniffi::flipt_react_native::st::foreignfuture::foreignfuture::free::cleanup();
 }
 
 // Utility functions for serialization/deserialization of strings.
@@ -2001,9 +1895,8 @@ jsi::Value NativeFliptReactNative::
   auto pointer =
       uniffi_jsi::Bridging<uint64_t>::fromJs(rt, callInvoker, args[0]);
   auto static destructor = [](uint64_t p) {
-    auto pointer = reinterpret_cast<void *>(static_cast<uintptr_t>(p));
     RustCallStatus status = {0};
-    uniffi_flipt_react_native_fn_free_fliptclient(pointer, &status);
+    uniffi_flipt_react_native_fn_free_fliptclient(p, &status);
   };
   auto ptrObj =
       std::make_shared<uniffi_jsi::DestructibleObject>(pointer, destructor);
@@ -2019,11 +1912,14 @@ NativeFliptReactNative::cpp_uniffi_flipt_react_native_fn_clone_fliptclient(
   RustCallStatus status =
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
   auto value = uniffi_flipt_react_native_fn_clone_fliptclient(
-      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+      uniffi_jsi::Bridging</*handle*/ uint64_t>::fromJs(rt, callInvoker,
+                                                        args[0]),
+      &status);
   uniffi::flipt_react_native::Bridging<RustCallStatus>::copyIntoJs(
       rt, callInvoker, status, args[count - 1]);
 
-  return uniffi_jsi::Bridging<void *>::toJs(rt, callInvoker, value);
+  return uniffi_jsi::Bridging</*handle*/ uint64_t>::toJs(rt, callInvoker,
+                                                         value);
 }
 jsi::Value
 NativeFliptReactNative::cpp_uniffi_flipt_react_native_fn_free_fliptclient(
@@ -2032,7 +1928,9 @@ NativeFliptReactNative::cpp_uniffi_flipt_react_native_fn_free_fliptclient(
   RustCallStatus status =
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
   uniffi_flipt_react_native_fn_free_fliptclient(
-      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+      uniffi_jsi::Bridging</*handle*/ uint64_t>::fromJs(rt, callInvoker,
+                                                        args[0]),
+      &status);
   uniffi::flipt_react_native::Bridging<RustCallStatus>::copyIntoJs(
       rt, callInvoker, status, args[count - 1]);
 
@@ -2051,7 +1949,8 @@ jsi::Value NativeFliptReactNative::
   uniffi::flipt_react_native::Bridging<RustCallStatus>::copyIntoJs(
       rt, callInvoker, status, args[count - 1]);
 
-  return uniffi_jsi::Bridging<void *>::toJs(rt, callInvoker, value);
+  return uniffi_jsi::Bridging</*handle*/ uint64_t>::toJs(rt, callInvoker,
+                                                         value);
 }
 jsi::Value NativeFliptReactNative::
     cpp_uniffi_flipt_react_native_fn_method_fliptclient_close(
@@ -2060,7 +1959,9 @@ jsi::Value NativeFliptReactNative::
   RustCallStatus status =
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
   uniffi_flipt_react_native_fn_method_fliptclient_close(
-      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+      uniffi_jsi::Bridging</*handle*/ uint64_t>::fromJs(rt, callInvoker,
+                                                        args[0]),
+      &status);
   uniffi::flipt_react_native::Bridging<RustCallStatus>::copyIntoJs(
       rt, callInvoker, status, args[count - 1]);
 
@@ -2073,7 +1974,8 @@ jsi::Value NativeFliptReactNative::
   RustCallStatus status =
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
   auto value = uniffi_flipt_react_native_fn_method_fliptclient_evaluate_batch(
-      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]),
+      uniffi_jsi::Bridging</*handle*/ uint64_t>::fromJs(rt, callInvoker,
+                                                        args[0]),
       uniffi::flipt_react_native::Bridging<RustBuffer>::fromJs(rt, callInvoker,
                                                                args[1]),
       &status);
@@ -2090,7 +1992,8 @@ jsi::Value NativeFliptReactNative::
   RustCallStatus status =
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
   auto value = uniffi_flipt_react_native_fn_method_fliptclient_evaluate_boolean(
-      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]),
+      uniffi_jsi::Bridging</*handle*/ uint64_t>::fromJs(rt, callInvoker,
+                                                        args[0]),
       uniffi::flipt_react_native::Bridging<RustBuffer>::fromJs(rt, callInvoker,
                                                                args[1]),
       &status);
@@ -2107,7 +2010,8 @@ jsi::Value NativeFliptReactNative::
   RustCallStatus status =
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
   auto value = uniffi_flipt_react_native_fn_method_fliptclient_evaluate_variant(
-      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]),
+      uniffi_jsi::Bridging</*handle*/ uint64_t>::fromJs(rt, callInvoker,
+                                                        args[0]),
       uniffi::flipt_react_native::Bridging<RustBuffer>::fromJs(rt, callInvoker,
                                                                args[1]),
       &status);
@@ -2125,7 +2029,8 @@ jsi::Value NativeFliptReactNative::
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
   auto value =
       uniffi_flipt_react_native_fn_method_fliptclient_get_snapshot_hash(
-          uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]),
+          uniffi_jsi::Bridging</*handle*/ uint64_t>::fromJs(rt, callInvoker,
+                                                            args[0]),
           &status);
   uniffi::flipt_react_native::Bridging<RustCallStatus>::copyIntoJs(
       rt, callInvoker, status, args[count - 1]);
@@ -2140,7 +2045,9 @@ jsi::Value NativeFliptReactNative::
   RustCallStatus status =
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
   auto value = uniffi_flipt_react_native_fn_method_fliptclient_list_flags(
-      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]), &status);
+      uniffi_jsi::Bridging</*handle*/ uint64_t>::fromJs(rt, callInvoker,
+                                                        args[0]),
+      &status);
   uniffi::flipt_react_native::Bridging<RustCallStatus>::copyIntoJs(
       rt, callInvoker, status, args[count - 1]);
 
@@ -2154,7 +2061,8 @@ jsi::Value NativeFliptReactNative::
   RustCallStatus status =
       uniffi::flipt_react_native::Bridging<RustCallStatus>::rustSuccess(rt);
   auto value = uniffi_flipt_react_native_fn_method_fliptclient_refresh(
-      uniffi_jsi::Bridging<void *>::fromJs(rt, callInvoker, args[0]),
+      uniffi_jsi::Bridging</*handle*/ uint64_t>::fromJs(rt, callInvoker,
+                                                        args[0]),
       uniffi::flipt_react_native::Bridging<RustBuffer>::fromJs(rt, callInvoker,
                                                                args[1]),
       &status);
